@@ -1,0 +1,73 @@
+import tkinter as tk
+from tkinter import ttk
+
+def decimal_to_binary(decimal_num):
+    return bin(decimal_num)[2:]
+
+def decimal_to_octal(decimal_num):
+    return oct(decimal_num)[2:]
+
+def decimal_to_hexadecimal(decimal_num):
+    return hex(decimal_num)[2:]
+
+def convert():
+    decimal_num = int(entry_decimal.get())
+
+    if conversion_type.get() == "Binary":
+        converted_num = decimal_to_binary(decimal_num)
+    elif conversion_type.get() == "Octal":
+        converted_num = decimal_to_octal(decimal_num)
+    else:
+        converted_num = decimal_to_hexadecimal(decimal_num)
+
+    output_label.config(text=f"{conversion_type.get()}: {converted_num}", font=("Arial", 12, "bold"))
+
+# Create the main application window
+root = tk.Tk()
+root.title("Number Converter")
+root.geometry("450x350")  # Increased height for better space
+root.configure(bg="#31A9B8")  # Set background color
+
+# Style
+style = ttk.Style()
+style.configure("TLabel", font=("Arial", 12))
+style.configure("TButton", font=("Arial", 12))
+style.map("TRadiobutton", background=[('selected', "#31A9B8")])  # Set background color
+
+# Widgets
+label_heading = ttk.Label(root, text="NUMBER SYSTEM CONVERTER", font=("Arial", 15, "bold"), background="#31A9B8")
+label_heading.grid(row=0, column=0, columnspan=2, padx=10, pady=(10, 5))
+
+label_description = ttk.Label(root, text="Enter a decimal number:", background="#31A9B8")
+label_description.grid(row=1, column=0, padx=10, pady=(10, 5))
+
+entry_decimal = ttk.Entry(root)
+entry_decimal.grid(row=1, column=1, padx=10, pady=(10, 5))
+
+label_conversion_type = ttk.Label(root, text="Select conversion type:", background="#31A9B8")
+label_conversion_type.grid(row=2, column=0, padx=10, pady=(5, 0), sticky="w")
+
+conversion_type = tk.StringVar()
+conversion_type.set("Binary")
+
+radio_binary = ttk.Radiobutton(root, text="Binary", variable=conversion_type, value="Binary")
+radio_binary.grid(row=3, column=0, padx=10, pady=(0, 5), sticky="w")
+
+radio_octal = ttk.Radiobutton(root, text="Octal", variable=conversion_type, value="Octal")
+radio_octal.grid(row=4, column=0, padx=10, pady=5, sticky="w")
+
+radio_hexadecimal = ttk.Radiobutton(root, text="Hexadecimal", variable=conversion_type, value="Hexadecimal")
+radio_hexadecimal.grid(row=5, column=0, padx=10, pady=(0, 10), sticky="w")
+
+button_convert = ttk.Button(root, text="Convert", command=convert)
+button_convert.grid(row=6, column=0, columnspan=2, padx=10, pady=(5, 5))
+
+output_label = ttk.Label(root, text="", foreground="blue", wraplength=400, background="#31A9B8")
+output_label.grid(row=7, column=0, columnspan=2, padx=10, pady=(0, 10))
+
+# Quit button
+button_quit = ttk.Button(root, text="Quit", command=root.quit)
+button_quit.grid(row=8, column=0, columnspan=2, padx=10, pady=(5, 10))
+
+# Run the application
+root.mainloop()
